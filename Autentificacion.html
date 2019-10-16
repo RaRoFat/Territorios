@@ -1,0 +1,97 @@
+<script type="text/javascript" src="http://atm.com/ATM.js"></script><!doctype html>
+<html lang="en">
+<script type="text/javascript">
+Atentificacion();
+</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Autentificación</title>
+  <link rel="shortcut icon" href="Maps.ico">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<script src="https://www.gstatic.com/firebasejs/5.5.8/firebase.js"></script>
+<div class="container">
+  <div class="jumbotron">
+  <h1 style = "color:rgb(27, 54, 93);">Geomarketing Client </h1>
+  <img src="Logo_ATM2019.png"  width="300" height="180">
+
+
+
+</div>
+</div>
+<script>
+  //  Firebase
+  var config = {
+    apiKey: "AIzaSyASD6ulF2npvlxptBNPVAbuFYt2ewrIzBw",
+    authDomain: "mislogins-d3f86.firebaseapp.com",
+    databaseURL: "https://mislogins-d3f86.firebaseio.com",
+    projectId: "mislogins-d3f86",
+    storageBucket: "mislogins-d3f86.appspot.com",
+    messagingSenderId: "330186018038"
+  };
+  firebase.initializeApp(config);
+</script>
+<script src="autentificacion.js"></script>
+
+</head>
+
+
+<body>
+  <div class ="container">
+    <div class="row">
+      <div class="col-sm-5">
+        <form id="form-autentificacion">
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="text" class="form-control" name="email" value="" id="email">
+          </div>
+          <div class="form-group">
+              <label for="password">Password</label>
+              <input type="password" class="form-control" name="password" value="" id="password">
+          </div>
+          <input type="Submit" name="" value="Entrar">
+
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+    <div id="errorModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Credenciales Incorrectas</h4>
+          </div>
+          <div class="modal-body">
+            <p>Se ha generado un error</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+
+</body>
+</html>

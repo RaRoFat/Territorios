@@ -1,0 +1,996 @@
+<script type="text/javascript" src="http://atm.com/ATM.js"></script><!doctype html>
+<html lang="en">
+<script type="text/javascript">
+Puebla();
+</script>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/MarkerCluster.css">
+        <link rel="stylesheet" href="css/MarkerCluster.Default.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/multi-style-layer.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet.markercluster.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/POTENCIALES_PUEBLA_1.js"></script>
+        <script src="data/CD_2.js"></script>
+        <script src="data/LIMITE_3.js"></script>
+        <script src="data/CLIENTES_4.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:18, minZoom:7
+        }).fitBounds([[13.788629816851309,-103.51867117135379],[21.865634872820312,-88.12934792861995]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="http://leafletjs.com" title="A JS library for interactive maps">Leaflet</a>');
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+            map.setMaxBounds(map.getBounds());
+        }
+        var layer_OSMStandard_0 = L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            opacity: 1.0,
+            attribution: '<a href="https://www.openstreetmap.org/copyright">© OpenStreetMap contributors, CC-BY-SA</a>',
+        });
+        layer_OSMStandard_0;
+        map.addLayer(layer_OSMStandard_0);
+        function pop_POTENCIALES_PUEBLA_1(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>nom_estab</strong><br />' + (feature.properties['nom_estab'] !== null ? Autolinker.link(String(feature.properties['nom_estab'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nom_vial'] !== null ? Autolinker.link(String(feature.properties['nom_vial'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nom_v_e_1'] !== null ? Autolinker.link(String(feature.properties['nom_v_e_1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nom_v_e_2'] !== null ? Autolinker.link(String(feature.properties['nom_v_e_2'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nom_v_e_3'] !== null ? Autolinker.link(String(feature.properties['nom_v_e_3'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['numero_ext'] !== null ? Autolinker.link(String(feature.properties['numero_ext'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['letra_ext'] !== null ? Autolinker.link(String(feature.properties['letra_ext'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['tipo_asent'] !== null ? Autolinker.link(String(feature.properties['tipo_asent'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['nomb_asent'] !== null ? Autolinker.link(String(feature.properties['nomb_asent'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['cod_postal'] !== null ? Autolinker.link(String(feature.properties['cod_postal'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['entidad'] !== null ? Autolinker.link(String(feature.properties['entidad'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['municipio'] !== null ? Autolinker.link(String(feature.properties['municipio'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['localidad'] !== null ? Autolinker.link(String(feature.properties['localidad'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['telefono'] !== null ? Autolinker.link(String(feature.properties['telefono'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['correoelec'] !== null ? Autolinker.link(String(feature.properties['correoelec'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['latitud'] !== null ? Autolinker.link(String(feature.properties['latitud'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['longitud'] !== null ? Autolinker.link(String(feature.properties['longitud'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['fecha_alta'] !== null ? Autolinker.link(String(feature.properties['fecha_alta'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['GIRO'] !== null ? Autolinker.link(String(feature.properties['GIRO'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PERSONAL'] !== null ? Autolinker.link(String(feature.properties['PERSONAL'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_POTENCIALES_PUEBLA_1_0() {
+            return {
+                pane: 'pane_POTENCIALES_PUEBLA_1',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+            }
+        }
+        map.createPane('pane_POTENCIALES_PUEBLA_1');
+        map.getPane('pane_POTENCIALES_PUEBLA_1').style.zIndex = 401;
+        map.getPane('pane_POTENCIALES_PUEBLA_1').style['mix-blend-mode'] = 'normal';
+        var layer_POTENCIALES_PUEBLA_1 = new L.geoJson(json_POTENCIALES_PUEBLA_1, {
+            attribution: '',
+            pane: 'pane_POTENCIALES_PUEBLA_1',
+            onEachFeature: pop_POTENCIALES_PUEBLA_1,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_POTENCIALES_PUEBLA_1_0(feature));
+            },
+        });
+        var cluster_POTENCIALES_PUEBLA_1 = new L.MarkerClusterGroup({showCoverageOnHover: false,
+            spiderfyDistanceMultiplier: 2});
+        cluster_POTENCIALES_PUEBLA_1.addLayer(layer_POTENCIALES_PUEBLA_1);
+
+        bounds_group.addLayer(layer_POTENCIALES_PUEBLA_1);
+        cluster_POTENCIALES_PUEBLA_1.addTo(map);
+        function pop_CD_2(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? Autolinker.link(String(feature.properties['OBJECTID'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OID_'] !== null ? Autolinker.link(String(feature.properties['OID_'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name'] !== null ? Autolinker.link(String(feature.properties['Name'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CD_2_0() {
+            return {
+                pane: 'pane_CD_2',
+                radius: 6.4,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,255,255,1.0)',
+            }
+        }
+        function style_CD_2_1() {
+            return {
+                pane: 'pane_CD_2',
+                radius: 1.4,
+                opacity: 1,
+                color: 'rgba(0,0,0,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(0,0,0,1.0)',
+            }
+        }
+        map.createPane('pane_CD_2');
+        map.getPane('pane_CD_2').style.zIndex = 402;
+        map.getPane('pane_CD_2').style['mix-blend-mode'] = 'normal';
+        var layer_CD_2 = new L.geoJson.multiStyle(json_CD_2, {
+            attribution: '',
+            pane: 'pane_CD_2',
+            onEachFeature: pop_CD_2,
+            pointToLayers: [function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_CD_2_0(feature));
+            },function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_CD_2_1(feature));
+            },
+        ]});
+        bounds_group.addLayer(layer_CD_2);
+        map.addLayer(layer_CD_2);
+        function pop_LIMITE_3(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID_1'] !== null ? Autolinker.link(String(feature.properties['OBJECTID_1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Polygon_Na'] !== null ? Autolinker.link(String(feature.properties['Polygon_Na'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_LIMITE_3_0() {
+            return {
+                pane: 'pane_LIMITE_3',
+                opacity: 1,
+                color: 'rgba(201,45,136,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 2.0,
+                fillOpacity: 0,
+            }
+        }
+        map.createPane('pane_LIMITE_3');
+        map.getPane('pane_LIMITE_3').style.zIndex = 403;
+        map.getPane('pane_LIMITE_3').style['mix-blend-mode'] = 'normal';
+        var layer_LIMITE_3 = new L.geoJson(json_LIMITE_3, {
+            attribution: '',
+            pane: 'pane_LIMITE_3',
+            onEachFeature: pop_LIMITE_3,
+            style: style_LIMITE_3_0,
+        });
+        bounds_group.addLayer(layer_LIMITE_3);
+        map.addLayer(layer_LIMITE_3);
+        function pop_CLIENTES_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PUEBLA__Ag'] !== null ? Autolinker.link(String(feature.properties['PUEBLA__Ag'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PUEBLA__Cl'] !== null ? Autolinker.link(String(feature.properties['PUEBLA__Cl'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['PUEBLA__CA'] !== null ? Autolinker.link(String(feature.properties['PUEBLA__CA'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2"><strong>PUEBLA__PE</strong><br />' + (feature.properties['PUEBLA__PE'] !== null ? Autolinker.link(String(feature.properties['PUEBLA__PE'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CUSTOMERS1'] !== null ? Autolinker.link(String(feature.properties['CUSTOMERS1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CUSTOMER_1'] !== null ? Autolinker.link(String(feature.properties['CUSTOMER_1'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CUSTOMER_2'] !== null ? Autolinker.link(String(feature.properties['CUSTOMER_2'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CUSTOMER_4'] !== null ? Autolinker.link(String(feature.properties['CUSTOMER_4'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CUSTOMER_5'] !== null ? Autolinker.link(String(feature.properties['CUSTOMER_5'])) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['CUSTOME_10'] !== null ? Autolinker.link(String(feature.properties['CUSTOME_10'])) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_CLIENTES_4_0(feature) {
+            switch(String(feature.properties['PUEBLA__CA'])) {
+                default:
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(86,161,230,1.0)',
+            }
+                    break;
+                case '000010':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(51,160,44,1.0)',
+            }
+                    break;
+                case '000011':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(233,126,118,1.0)',
+            }
+                    break;
+                case '000012':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(196,204,79,1.0)',
+            }
+                    break;
+                case '000015':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(120,200,182,1.0)',
+            }
+                    break;
+                case '000018':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,149,18,1.0)',
+            }
+                    break;
+                case '000020':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,9,194,1.0)',
+            }
+                    break;
+                case '000026':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(219,23,39,1.0)',
+            }
+                    break;
+                case '000027':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(76,230,107,1.0)',
+            }
+                    break;
+                case '000028':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(96,215,27,1.0)',
+            }
+                    break;
+                case '000029':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,201,62,1.0)',
+            }
+                    break;
+                case '000030':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(21,223,119,1.0)',
+            }
+                    break;
+                case '000031':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(224,84,234,1.0)',
+            }
+                    break;
+                case '000044':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,164,20,1.0)',
+            }
+                    break;
+                case '000051':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(221,60,141,1.0)',
+            }
+                    break;
+                case '000058':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(99,126,223,1.0)',
+            }
+                    break;
+                case '000070':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(123,116,213,1.0)',
+            }
+                    break;
+                case '000071':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(217,50,181,1.0)',
+            }
+                    break;
+                case '000072':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(210,104,47,1.0)',
+            }
+                    break;
+                case '000074':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(96,207,234,1.0)',
+            }
+                    break;
+                case '000104':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(223,87,49,1.0)',
+            }
+                    break;
+                case '000106':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(226,117,157,1.0)',
+            }
+                    break;
+                case '000110':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(46,116,64,1.0)',
+            }
+                    break;
+                case '000118':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(113,216,149,1.0)',
+            }
+                    break;
+                case '000119':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(91,209,217,1.0)',
+            }
+                    break;
+                case '000121':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(193,77,225,1.0)',
+            }
+                    break;
+                case '000124':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(228,78,218,1.0)',
+            }
+                    break;
+                case '000125':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(137,109,239,1.0)',
+            }
+                    break;
+                case '000126':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(211,21,62,1.0)',
+            }
+                    break;
+                case '000135':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,107,170,1.0)',
+            }
+                    break;
+                case '000139':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(99,233,222,1.0)',
+            }
+                    break;
+                case '000151':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(159,215,104,1.0)',
+            }
+                    break;
+                case '000174':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(90,23,215,1.0)',
+            }
+                    break;
+                case '000181':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(208,229,125,1.0)',
+            }
+                    break;
+                case '000186':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(212,153,93,1.0)',
+            }
+                    break;
+                case '000217':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(176,221,93,1.0)',
+            }
+                    break;
+                case '000218':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(101,141,216,1.0)',
+            }
+                    break;
+                case '000219':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(142,63,221,1.0)',
+            }
+                    break;
+                case '000226':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(156,55,210,1.0)',
+            }
+                    break;
+                case '000228':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(78,89,233,1.0)',
+            }
+                    break;
+                case '000240':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(41,234,54,1.0)',
+            }
+                    break;
+                case '003322':
+                    return {
+                pane: 'pane_CLIENTES_4',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(75,238,30,1.0)',
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_CLIENTES_4');
+        map.getPane('pane_CLIENTES_4').style.zIndex = 404;
+        map.getPane('pane_CLIENTES_4').style['mix-blend-mode'] = 'normal';
+        var layer_CLIENTES_4 = new L.geoJson(json_CLIENTES_4, {
+            attribution: '',
+            pane: 'pane_CLIENTES_4',
+            onEachFeature: pop_CLIENTES_4,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_CLIENTES_4_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_CLIENTES_4);
+        map.addLayer(layer_CLIENTES_4);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'CLIENTES<br /><table><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0.png" /></td><td></td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0000101.png" /></td><td>000010</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0000112.png" /></td><td>000011</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0000123.png" /></td><td>000012</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0000154.png" /></td><td>000015</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0000185.png" /></td><td>000018</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0000206.png" /></td><td>000020</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0000267.png" /></td><td>000026</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0000278.png" /></td><td>000027</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_0000289.png" /></td><td>000028</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00002910.png" /></td><td>000029</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00003011.png" /></td><td>000030</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00003112.png" /></td><td>000031</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00004413.png" /></td><td>000044</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00005114.png" /></td><td>000051</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00005815.png" /></td><td>000058</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00007016.png" /></td><td>000070</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00007117.png" /></td><td>000071</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00007218.png" /></td><td>000072</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00007419.png" /></td><td>000074</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00010420.png" /></td><td>000104</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00010621.png" /></td><td>000106</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00011022.png" /></td><td>000110</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00011823.png" /></td><td>000118</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00011924.png" /></td><td>000119</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00012125.png" /></td><td>000121</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00012426.png" /></td><td>000124</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00012527.png" /></td><td>000125</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00012628.png" /></td><td>000126</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00013529.png" /></td><td>000135</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00013930.png" /></td><td>000139</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00015131.png" /></td><td>000151</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00017432.png" /></td><td>000174</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00018133.png" /></td><td>000181</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00018634.png" /></td><td>000186</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00021735.png" /></td><td>000217</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00021836.png" /></td><td>000218</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00021937.png" /></td><td>000219</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00022638.png" /></td><td>000226</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00022839.png" /></td><td>000228</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00024040.png" /></td><td>000240</td></tr><tr><td style="text-align: center;"><img src="legend/CLIENTES_4_00332241.png" /></td><td>003322</td></tr></table>': layer_CLIENTES_4,'<img src="legend/LIMITE_3.png" /> LIMITE': layer_LIMITE_3,'<img src="legend/CD_2.png" /> CD': layer_CD_2,'<img src="legend/POTENCIALES_PUEBLA_1.png" /> POTENCIALES_PUEBLA': cluster_POTENCIALES_PUEBLA_1,"OSM Standard": layer_OSMStandard_0,}).addTo(map);
+        setBounds();
+        map.addControl(new L.Control.Search({
+            layer: layer_CLIENTES_4,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'PUEBLA__PE'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        </script>
+    </body>
+</html>

@@ -1,0 +1,1 @@
+var json_CD_2 = {"type":"FeatureCollection","name":"CD_2","crs":{"type":"name","properties":{"name":"urn:ogc:def:crs:OGC:1.3:CRS84"}},"features":[{"type":"Feature","properties":{"OBJECTID":1.0,"OID_":0.0,"Name":"PUEBLA"},"geometry":{"type":"Point","coordinates":[-98.234389,19.102826]}}]}
